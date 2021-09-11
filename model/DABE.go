@@ -187,11 +187,12 @@ func (d *DABE) Decrypt(cipher *Cipher, privateKeys map[string]*pbc.Element, gid 
 	if len(aesKey.Bytes()) <= 32 {
 		return nil, fmt.Errorf("invalid aeskey:: decrypt failed.\n")
 	}
+	fmt.Println("aesKey: "+aesKey.String())
 	M, err := AES.AesDecrypt(cipher.CipherText, (aesKey.Bytes())[0:32])
 	if err != nil || M == nil {
 		return nil, fmt.Errorf("aes error:: decrypt failed.\n")
 	}
-	fmt.Println("DABE Decrypt success")
+	fmt.Println("DABE Decrypt success,plain text: "+string(M))
 	return M, nil
 }
 
