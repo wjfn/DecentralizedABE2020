@@ -2,6 +2,7 @@ package DecentralizedABE
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"fmt"
 	"github.com/Nik-U/pbc"
 	"github.com/wjfn/DecentralizedABE2020/model/AES"
@@ -17,8 +18,10 @@ func (d *DABE) GlobalSetup() {
 	fmt.Println("DABE GlobalSetup start")
 	d.CurveParam = new(CurveParam)
 	d.CurveParam.Initialize()
-	d.G = d.CurveParam.GetNewG1()
-	d.EGG = d.CurveParam.GetNewGT().Pair(d.G, d.G)
+	bytes, _ := hex.DecodeString("34b2bc99a307591a4da995523754cc2bca96db9671736834d0c6160051380572277f24a106ae0853cfe7445d887378e2cf2ca18407d3749592a9df988a8f38608721fb8699baa94708aee1b989c3a92cd0217a693a5395db7835a396d848e09e47d5")
+	d.G = d.CurveParam.Get0FromG1().SetBytes(bytes)
+	//d.G = d.CurveParam.GetNewG1()
+	d.EGG = d.CurveParam.Get1FromGT().Pair(d.G, d.G)
 	fmt.Println("DABE GlobalSetup success")
 }
 

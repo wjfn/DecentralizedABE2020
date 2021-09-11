@@ -1,9 +1,9 @@
 package AES
 
 import (
-	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
+	"bytes"
 	"fmt"
 )
 
@@ -38,6 +38,7 @@ func AesDecrypt(crypted, key []byte) ([]byte, error) {
 	return origData, nil
 }
 
+
 func ZeroPadding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{0}, padding)
@@ -60,10 +61,10 @@ func PKCS5UnPadding(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
 	unpadding := int(origData[length-1])
-	if unpadding >= length {
+	if unpadding>=length {
 		fmt.Printf("wrong SK.Decrypt failed.\n")
 		return nil
-	} else {
+	}else{
 		return origData[:(length - unpadding)]
 	}
 }

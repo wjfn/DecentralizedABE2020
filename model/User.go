@@ -82,6 +82,7 @@ func (u *User) GenerateOrgShare(n, t int, userNames map[string]*pbc.Element, org
 		N:           n,
 		T:           t,
 		OthersShare: make([]*pbc.Element, 0, 0),
+		Share:       make(map[string]*pbc.Element),
 	}
 	opkPart := &OPKPart{
 		APKMap: make(map[string]*pbc.Element),
@@ -93,6 +94,7 @@ func (u *User) GenerateOrgShare(n, t int, userNames map[string]*pbc.Element, org
 	for name, hGID := range userNames {
 		shares[name] = u.share(hGID, d, n, t, f)
 	}
+	oskPart.Share = shares
 	return shares, nil
 }
 
@@ -126,22 +128,23 @@ func (u *User) GenerateOrgAttrShare(n, t int, org *Org, d *DABE, attrName string
 	for name, hGID := range org.UserName2GID {
 		shares[name] = u.share(hGID, d, n, t, f)
 	}
+	askPart.Share = shares
 	return shares, nil
 }
 
 //组装其他用户的share，传入aid为0表示为了生成opk，为1表示为了生成apk
-func (u *User) AssembleShare(names []string, name2share map[string]*pbc.Element, d *DABE,
+func (u *User) AssembleShare(shares []*pbc.Element, d *DABE,
 	n int, aid int, orgName string, attrName string) (*pbc.Element, error) {
 
 	if aid < 0 || aid > 1 {
 		return nil, fmt.Errorf("wrong aid")
 	}
-	if len(name2share) != n || len(names) != n {
+	if len(shares) != n {
 		return nil, fmt.Errorf("length not enough")
 	}
 	key := d.CurveParam.Get0FromZn()
-	for _, name := range names {
-		key.ThenAdd(name2share[name])
+	for _, share := range shares {
+		key.ThenAdd(share)
 		//fmt.Println("---"+key.String())
 	}
 	if aid == 0 {

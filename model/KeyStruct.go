@@ -39,13 +39,15 @@ type OSKPart struct {
 	F           []*pbc.Element      `field:"3"` //for shamir's share
 	N           int
 	T           int
-	OthersShare []*pbc.Element `field:"3"` //for some special time
-	OSK         *pbc.Element   `field:"3"` //mul shares
-	GOSK        *pbc.Element   `field:"0"`
+	OthersShare []*pbc.Element          `field:"3"` //for some special time
+	OSK         *pbc.Element            `field:"3"` //mul shares
+	GOSK        *pbc.Element            `field:"0"`
+	Share       map[string]*pbc.Element `field:"3"`
 }
 type ASKPart struct {
-	F           []*pbc.Element `field:"3"` //for shamir's share
-	OthersShare []*pbc.Element `field:"3"` //for some special time
-	YPart       *pbc.Element   `field:"3"`
-	ASK         *pbc.Element   `field:"3"` //mul shares
+	F           []*pbc.Element          `field:"3"` //for shamir's share
+	OthersShare []*pbc.Element          `field:"3"` //for some special time
+	YPart       *pbc.Element            `field:"3"`
+	ASK         *pbc.Element            `field:"3"` //mul shares
+	Share       map[string]*pbc.Element `field:"3"` //store share to others
 }
