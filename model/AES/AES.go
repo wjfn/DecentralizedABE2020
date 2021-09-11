@@ -28,14 +28,14 @@ func AesDecrypt(crypted, key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Println("AesDecrypt--- after newcipher")
+	//fmt.Println("AesDecrypt--- after newcipher")
 	blockSize := block.BlockSize()
 	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
 	//origData := make([]byte, len(crypted))
 	origData := crypted
 	blockMode.CryptBlocks(origData, crypted)
 	//origData = PKCS5UnPadding(origData)
-	origData = ZeroUnPadding(origData)
+	//origData = ZeroUnPadding(origData)
 	return origData, nil
 }
 
