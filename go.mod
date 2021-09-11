@@ -1,4 +1,4 @@
-module github.com/thorweiyan/DecentralizedABE2020
+module github.com/wjfn/DecentralizedABE2020
 
 go 1.13
 
