@@ -107,6 +107,7 @@ func (d *DABE) Encrypt(m string, uPolicy string, authorities map[string]Authorit
 			return nil, fmt.Errorf("authority not found, error when %s", attrStr)
 		}
 		authority := authorities[authorityName]
+		fmt.Println("attrStr: %s",attrSrt)
 		pk := authority.GetAPKMap()[attrStr]
 		if pk == nil {
 			return nil, fmt.Errorf("pk not found, error when %s", attrStr)
