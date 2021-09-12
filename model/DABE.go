@@ -71,6 +71,7 @@ func (d *DABE) OrgSetup(n, t int, name string, userNames []string) (*Org, error)
 func (d *DABE) Encrypt(m string, uPolicy string, authorities map[string]Authority) (*Cipher, error) {
 	fmt.Println("DABE Encrypt start")
 	aesKey := d.EGG.NewFieldElement().Rand()
+	fmt.Println("aesKey before encrypt: "+aesKey.String())
 	aesCipherText, err := AES.AesEncrypt([]byte(m), (aesKey.Bytes())[0:32])
 	if err != nil {
 		return nil, fmt.Errorf("AES encrypt error\n")
@@ -187,7 +188,7 @@ func (d *DABE) Decrypt(cipher *Cipher, privateKeys map[string]*pbc.Element, gid 
 	if len(aesKey.Bytes()) <= 32 {
 		return nil, fmt.Errorf("invalid aeskey:: decrypt failed.\n")
 	}
-	fmt.Println("aesKey: "+aesKey.String())
+	fmt.Println("aesKey after decrypt: "+aesKey.String())
 	M, err := AES.AesDecrypt(cipher.CipherText, (aesKey.Bytes())[0:32])
 	if err != nil || M == nil {
 		return nil, fmt.Errorf("aes error:: decrypt failed.\n")
