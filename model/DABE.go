@@ -26,11 +26,11 @@ func (d *DABE) GlobalSetup() {
 }
 
 func (d *DABE) UserSetup(name string) *User {
-	fmt.Println("DABE UserSetup start")
+	//fmt.Println("DABE UserSetup start")
 	alpha := d.CurveParam.GetNewZn()
 	eGGAlpha := d.EGG.NewFieldElement().PowZn(d.EGG, alpha)
 	gAlpha := d.G.NewFieldElement().PowZn(d.G, alpha)
-	fmt.Printf("DABE UserSetup success for %s\n", name)
+	//fmt.Printf("DABE UserSetup success for %s\n", name)
 	return &User{
 		APKMap:   make(map[string]*APK),
 		ASKMap:   make(map[string]*ASK),
@@ -71,7 +71,7 @@ func (d *DABE) OrgSetup(n, t int, name string, userNames []string) (*Org, error)
 func (d *DABE) Encrypt(m string, uPolicy string, authorities map[string]Authority) (*Cipher, error) {
 	fmt.Println("DABE Encrypt start")
 	aesKey := d.EGG.NewFieldElement().Rand()
-	fmt.Println("aesKey before encrypt: "+aesKey.String())
+	//fmt.Println("aesKey before encrypt: "+aesKey.String())
 	aesCipherText, err := AES.AesEncrypt([]byte(m), (aesKey.Bytes())[0:32])
 	if err != nil {
 		return nil, fmt.Errorf("AES encrypt error\n")
@@ -107,7 +107,7 @@ func (d *DABE) Encrypt(m string, uPolicy string, authorities map[string]Authorit
 			return nil, fmt.Errorf("authority not found, error when %s", attrStr)
 		}
 		authority := authorities[authorityName]
-		fmt.Println("attrStr: %s",attrSrt)
+		//fmt.Println("attrStr: %s",attrStr)
 		pk := authority.GetAPKMap()[attrStr]
 		if pk == nil {
 			return nil, fmt.Errorf("pk not found, error when %s", attrStr)
@@ -189,7 +189,7 @@ func (d *DABE) Decrypt(cipher *Cipher, privateKeys map[string]*pbc.Element, gid 
 	if len(aesKey.Bytes()) <= 32 {
 		return nil, fmt.Errorf("invalid aeskey:: decrypt failed.\n")
 	}
-	fmt.Println("aesKey after decrypt: "+aesKey.String())
+	//fmt.Println("aesKey after decrypt: "+aesKey.String())
 	M, err := AES.AesDecrypt(cipher.CipherText, (aesKey.Bytes())[0:32])
 	if err != nil || M == nil {
 		return nil, fmt.Errorf("aes error:: decrypt failed.\n")
