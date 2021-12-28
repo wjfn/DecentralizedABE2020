@@ -194,7 +194,7 @@ func (d *DABE) Decrypt(cipher *Cipher, privateKeys map[string]*pbc.Element, gid 
 	if err != nil || M == nil {
 		return nil, fmt.Errorf("aes error:: decrypt failed.\n")
 	}
-	fmt.Println("DABE Decrypt success,plain text: "+string(M))
+	fmt.Println("DABE Decrypt success")
 	return M, nil
 }
 
